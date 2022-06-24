@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Category;
 use App\Post;
+use App\Category;
+use App\Tag;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use Illuminate\Auth\Events\Validated;
@@ -32,10 +33,10 @@ class PostController extends Controller
      */
     public function create()
     {
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -48,7 +49,9 @@ class PostController extends Controller
         $slug = Str::slug($request->title, '-');
         $validated['slug'] = $slug;
         // dd($validated);
-        Post::create($validated);
+        // dd($request->tags);
+        $new_post = Post::create($validated);
+        $new_post->tags()->attach($request->tags);
         return redirect()->route('admin.posts.index')->with('message', "Post Created Successfully");
     }
 
