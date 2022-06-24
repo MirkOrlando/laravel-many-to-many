@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Tag;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -14,17 +16,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $tags = Tag::orderByDesc('id')->get();
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -35,29 +28,12 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tag $tag)
-    {
-        //
+        $val_data = $request->all();
+        $slug = Str::slug($request->name);
+        $val_data['slug'] = $slug;
+        //dd($val_data);
+        Tag::create($val_data);
+        return redirect()->back()->with('message', "Category \"$slug\" created successfulli");
     }
 
     /**

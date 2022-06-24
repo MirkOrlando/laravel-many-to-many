@@ -28,6 +28,9 @@ Route::middleware('auth')
         Route::resource('/categories', 'CategoryController')->parameters([
             'categories' => 'category:slug'
         ])->except('show', 'create', 'edit');
+        Route::resource('/tags', 'TagController')->parameters([
+            'tags' => 'tag:slug'
+        ])->except('show', 'create', 'edit');
     });
 
 Route::get("{any?}", function () {
