@@ -44,7 +44,9 @@
                 <select multiple class="form-control" name="tags[]" id="tags" aria-label="Tags">
                     <option value="" disabled>Select a tag</option>
                     @forelse ($tags as $tag)
-                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        <option value="{{ $tag->id }}"
+                            {{ old('tags') ? (in_array($tag->id, old('tags')) ? 'selected' : '') : '' }}>
+                            {{ $tag->name }}</option>
                     @empty
                         <option value="" disabled>No Tags to be selected</option>
                     @endforelse
