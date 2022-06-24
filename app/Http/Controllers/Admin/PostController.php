@@ -54,7 +54,6 @@ class PostController extends Controller
         $new_post->tags()->attach($request->tags);
         return redirect()->route('admin.posts.index')->with('message', "Post Created Successfully");
     }
-
     /**
      * Display the specified resource.
      *
