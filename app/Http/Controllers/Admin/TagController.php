@@ -6,6 +6,7 @@ use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use App\Http\Requests\TagRequest;
 
 class TagController extends Controller
 {
@@ -26,14 +27,14 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
         $val_data = $request->all();
         $slug = Str::slug($request->name);
         $val_data['slug'] = $slug;
         //dd($val_data);
         Tag::create($val_data);
-        return redirect()->back()->with('message', "Category \"$slug\" created successfulli");
+        return redirect()->back()->with('message', "Tag \"$slug\" created successfulli");
     }
 
     /**
@@ -43,9 +44,14 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(TagRequest $request, Tag $tag)
     {
-        //
+        $val_data = $request->all();
+        $slug = Str::slug($request->name);
+        $val_data['slug'] = $slug;
+        //dd($val_data);
+        $tag->update($val_data);
+        return redirect()->back()->with('message', "Tag \"$slug\" updated successfully");
     }
 
     /**
@@ -56,6 +62,7 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        return redirect()->back()->with('message', "Tag \"$tag->slug\" deleted successfully");
     }
 }
