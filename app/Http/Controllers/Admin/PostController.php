@@ -74,8 +74,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tagsSelected = [];
+        foreach ($post->tags as $tag) {
+            array_push($tagsSelected, $tag->name);
+        }
+        // dd($tagsSelected);
+        return view('admin.posts.edit', compact('post', 'categories', 'tags', 'tagsSelected'));
     }
 
     /**
@@ -92,6 +98,7 @@ class PostController extends Controller
         $validated['slug'] = $slug;
         //dd($validated);
         $post->update($validated);
+        $post->tags()->sync($request->tags);
         return redirect()->route('admin.posts.index')->with('message', "$post->title Updated Successfully");
     }
 

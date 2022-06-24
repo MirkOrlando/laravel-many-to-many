@@ -35,10 +35,23 @@
                     <option value="" {{ !$post->category_id ? 'selected' : '' }}>Select a Category</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}"
-                            {{ $category->id == old('category_id', $post->category_id ? '$post->category_id' : '') ? 'selected' : '' }}>
+                            {{ $post->category_id && $category->id == old('category_id', $post->category_id) ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="tags" class="form-label">Tags</label>
+                <select multiple class="form-control" name="tags[]" id="tags" aria-label="Tags">
+                    <option value="" disabled>Select a tag</option>
+                    @forelse ($tags as $tag)
+                        <option value="{{ $tag->id }}"
+                            {{ old('tags', $post->tags) ? (in_array($tag->name, old('tags', $tagsSelected)) ? 'selected' : '') : '' }}>
+                            {{ $tag->name }}</option>
+                    @empty
+                        <option value="" disabled>No Tags to be selected</option>
+                    @endforelse
                 </select>
             </div>
             <div class="mb-3">
