@@ -29,7 +29,8 @@
                         <td scope="row">{{ $post->id }}</td>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->created_at->format('d/m/Y') }}</td>
-                        <td><img width="100px" src="{{ $post->cover_img }}" alt="cover img {{ $post->title }}"></td>
+                        <td><img width="100px" src="{{ asset('storage/' . $post->cover_img) }}"
+                                alt="cover img {{ $post->title }}"></td>
                         <td>
                             <a href="{{ route('admin.posts.show', $post->slug) }}" class="btn btn-primary btn-sm">View</a>
                             <a href="{{ route('admin.posts.edit', $post->slug) }}"

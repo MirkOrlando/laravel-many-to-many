@@ -107,6 +107,16 @@ class PostController extends Controller
         $slug = Str::slug($request->title, '-');
         $validated['slug'] = $slug;
         //dd($validated);
+        if ($request->hasFile('cover_img')) {
+            $request->validate([
+                'cover_img' => 'nullable|image|max:5000'
+            ]);
+
+            $path = Storage::put('post_img', $request->cover_img);
+
+            $validated['cover_img'] = $path;
+        }
+
         $post->update($validated);
         $post->tags()->sync($request->tags);
         return redirect()->route('admin.posts.index')->with('message', "$post->title Updated Successfully");
