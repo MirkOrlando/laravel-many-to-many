@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -48,6 +48,16 @@ class PostController extends Controller
         $validated = $request->validated();
         $slug = Str::slug($request->title, '-');
         $validated['slug'] = $slug;
+
+        if ($request->hasFile('cover_img')) {
+            $request->validate([
+                'cover_img' => 'nullable|image|max:5000'
+            ]);
+
+            $path = Storage::put('post_img', $request->cover_img);
+
+            $validated['cover_img'] = $path;
+        }
         // dd($validated);
         // dd($request->tags);
         $new_post = Post::create($validated);

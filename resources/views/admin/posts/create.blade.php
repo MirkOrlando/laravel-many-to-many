@@ -12,7 +12,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('admin.posts.store') }}" method="post">
+        <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
@@ -22,11 +22,9 @@
             </div>
             <div class="mb-3">
                 <label for="cover_img" class="form-label">Cover Image</label>
-                <input type="text" class="form-control @error('cover_img') is-invalid @enderror" name="cover_img"
-                    id="cover_img" aria-describedby="coverHelper"
-                    placeholder="https://gametimers.it/wp-content/uploads/2022/02/naruto-scaled.jpg"
-                    value="{{ old('cover_img') }}">
-                <small id="coverHelper" class="form-text text-muted">Post's cover image urls here</small>
+                <input type="file" class="form-control @error('cover_img') is-invalid @enderror" name="cover_img"
+                    id="cover_img" aria-describedby="coverHelper">
+                <small id="coverHelper" class="form-text text-muted">Post's cover image file here</small>
             </div>
             <div class="mb-3">
                 <label for="category_id" class="form-label">Categories</label>
