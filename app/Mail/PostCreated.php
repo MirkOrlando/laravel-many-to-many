@@ -34,6 +34,6 @@ class PostCreated extends Mailable
         return $this
             ->from('noreply@example.com')
             ->subject('A New Post Has Been Added')
-            ->view('view.name');
+            ->view('mail.posts.created');
     }
 }
