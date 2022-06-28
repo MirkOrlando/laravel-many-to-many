@@ -29,7 +29,8 @@ class PostRequest extends FormRequest
             'cover_img' => 'nullable',
             'content' => 'required',
             'category_id' => ['nullable', 'exists:categories,id'],
-            'tags' => ['exists:tags,id']
+            'tags' => ['exists:tags,id'],
+            'user_id' => ['exists:users,id'],
         ];
     }
 }

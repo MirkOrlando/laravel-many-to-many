@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -51,6 +52,7 @@ class PostController extends Controller
         $validated = $request->validated();
         $slug = Str::slug($request->title, '-');
         $validated['slug'] = $slug;
+        $validated['user_id'] = Auth::id();
 
         if ($request->hasFile('cover_img')) {
             $request->validate([

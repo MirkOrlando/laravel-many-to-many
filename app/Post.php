@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'content', 'cover_img', 'slug', 'category_id'];
+    protected $fillable = ['title', 'content', 'cover_img', 'slug', 'category_id', 'user_id'];
 
     /**
      * Get the category that owns the Post
