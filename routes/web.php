@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Post;
+use App\Mail\PostUpdatedAdminMessage;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,11 @@ Route::middleware('auth')
             'tags' => 'tag:slug'
         ])->except('show', 'create', 'edit');
     });
+
+/* Route::get('mailable', function () {
+    $post = Post::findorfail(1);
+    return new PostUpdatedAdminMessage($post);
+}); */
 
 Route::get("{any?}", function () {
     return view("guest.home");
